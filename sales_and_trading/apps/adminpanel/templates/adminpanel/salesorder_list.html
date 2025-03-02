@@ -1,0 +1,49 @@
+{% extends "adminpanel/base.html" %}
+{% block content %}
+<h2 style="margin-bottom: 20px;">SalesOrders</h2>
+<table style="
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+">
+  <thead style="
+    background: #e8e8e8;
+    text-align: left;
+  ">
+    <tr>
+      <th style="padding: 12px; border-bottom: 1px solid #ccc;">ID</th>
+      <th style="padding: 12px; border-bottom: 1px solid #ccc;">Customer</th>
+      <th style="padding: 12px; border-bottom: 1px solid #ccc;">Status</th>
+      <th style="padding: 12px; border-bottom: 1px solid #ccc;">Created</th>
+      <th style="padding: 12px; border-bottom: 1px solid #ccc;">Total</th>
+      <th style="padding: 12px; border-bottom: 1px solid #ccc;">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for order in orders %}
+    <tr>
+      <td style="padding: 12px; border-bottom: 1px solid #ccc;">{{ order.id }}</td>
+      <td style="padding: 12px; border-bottom: 1px solid #ccc;">{{ order.customer.username }}</td>
+      <td style="padding: 12px; border-bottom: 1px solid #ccc;">{{ order.status }}</td>
+      <td style="padding: 12px; border-bottom: 1px solid #ccc;">{{ order.created_at|date:"Y-m-d H:i" }}</td>
+      <td style="padding: 12px; border-bottom: 1px solid #ccc;">{{ order.total }}</td>
+      <td style="padding: 12px; border-bottom: 1px solid #ccc;">
+        <a
+          href="{% url 'adminpanel:salesorder_update' order.id %}"
+          style="
+            background: #358240;
+            color: #fff;
+            padding: 6px 12px;
+            text-decoration: none;
+            border-radius: 4px;
+          "
+        >
+          Edit
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

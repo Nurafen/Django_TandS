@@ -1,0 +1,79 @@
+{% extends "adminpanel/base.html" %}
+{% block content %}
+<div style="
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+">
+  <h2>Products</h2>
+  <a
+    href="{% url 'adminpanel:product_create' %}"
+    style="
+      background: #417690;
+      color: #fff;
+      padding: 10px 15px;
+      text-decoration: none;
+      border-radius: 4px;
+    "
+  >
+    Create Product
+  </a>
+</div>
+
+<table style="
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+">
+  <thead style="
+    background: #e8e8e8;
+    text-align: left;
+  ">
+    <tr>
+      <th style="padding: 12px; border-bottom: 1px solid #ccc;">Product Image</th>
+      <th style="padding: 12px; border-bottom: 1px solid #ccc;">ID</th>
+      <th style="padding: 12px; border-bottom: 1px solid #ccc;">Name</th>
+      <th style="padding: 12px; border-bottom: 1px solid #ccc;">Category</th>
+      <th style="padding: 12px; border-bottom: 1px solid #ccc;">Price</th>
+      <th style="padding: 12px; border-bottom: 1px solid #ccc;">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for product in products %}
+    <tr>
+      <td style="padding: 12px; border-bottom: 1px solid #ccc;">
+        {% if product.image %}
+          <img src="{{ product.image.url }}" alt="Product" height="50"/>
+        {% else %}
+          No Image
+        {% endif %}
+      </td>
+      <td style="padding: 12px; border-bottom: 1px solid #ccc;">{{ product.id }}</td>
+      <td style="padding: 12px; border-bottom: 1px solid #ccc;">{{ product.name }}</td>
+      <td style="padding: 12px; border-bottom: 1px solid #ccc;">
+        {% if product.category %}
+          {{ product.category.name }}
+        {% endif %}
+      </td>
+      <td style="padding: 12px; border-bottom: 1px solid #ccc;">{{ product.price }}</td>
+      <td style="padding: 12px; border-bottom: 1px solid #ccc;">
+        <a
+          href="{% url 'adminpanel:product_update' product.id %}"
+          style="
+            background: #358240;
+            color: #fff;
+            padding: 6px 12px;
+            text-decoration: none;
+            border-radius: 4px;
+          "
+        >
+          Edit
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

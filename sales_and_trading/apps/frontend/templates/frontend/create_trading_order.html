@@ -1,0 +1,111 @@
+{% extends "frontend/base.html" %}
+{% block content %}
+<div class="trading-order-container">
+  <h2 class="trading-order-title">Create Trading Order</h2>
+
+  <form method="POST" class="trading-order-form">
+    {% csrf_token %}
+
+    <div class="form-group">
+      {% for field in form %}
+        <div class="input-container">
+          {{ field.label_tag }}
+          {{ field }}
+        </div>
+      {% endfor %}
+    </div>
+
+    <button type="submit" class="trading-order-button">Place Order</button>
+  </form>
+</div>
+
+<style>
+  /* Container */
+  .trading-order-container {
+    max-width: 450px;
+    margin: 50px auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    text-align: center;
+  }
+
+  /* Title */
+  .trading-order-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  /* Form Fields */
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .input-container {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 15px;
+  }
+
+  .input-container label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 5px;
+  }
+
+  .input-container input,
+  .input-container select,
+  .input-container textarea {
+    width: calc(100% - 20px); /* Убираем лишний отступ */
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+
+  .input-container input:focus,
+  .input-container select:focus,
+  .input-container textarea:focus {
+    border-color: #417690;
+    box-shadow: 0 0 8px rgba(65, 118, 144, 0.3);
+    outline: none;
+  }
+
+  /* Submit Button */
+  .trading-order-button {
+    width: 100%;
+    background: linear-gradient(135deg, #ff9800, #ff5722);
+    color: #fff;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+
+  .trading-order-button:hover {
+    background: linear-gradient(135deg, #ff5722, #d84315);
+    transform: scale(1.02);
+  }
+
+  /* Responsive */
+  @media (max-width: 480px) {
+    .trading-order-container {
+      width: 90%;
+      padding: 20px;
+    }
+  }
+</style>
+{% endblock %}

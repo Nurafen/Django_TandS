@@ -1,0 +1,84 @@
+{% extends "frontend/base.html" %}
+{% block content %}
+<div style="
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 6px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+">
+  <h2 style="
+    margin-top: 0;
+    margin-bottom: 15px;
+  ">
+    Sales Order #{{ order.id }}
+  </h2>
+  <p style="margin-bottom: 5px;">Status: {{ order.status }}</p>
+  <p style="margin-bottom: 5px;">Created: {{ order.created_at|date:"Y-m-d H:i" }}</p>
+  <p style="margin-bottom: 15px;">Total: {{ order.total }}</p>
+
+  {% if order.status == "approved" %}
+    <a
+      href="{% url 'frontend:stripe_checkout' order.id %}"
+      style="
+        display: inline-block;
+        background: #417690;
+        color: #fff;
+        padding: 8px 14px;
+        text-decoration: none;
+        border-radius: 4px;
+        margin-bottom: 15px;
+      "
+    >
+      Pay Now (Stripe Test)
+    </a>
+  {% elif order.status == "completed" %}
+    <p>This order is already completed.</p>
+  {% else %}
+    <p>Order not ready for payment. Current status: {{ order.status }}</p>
+  {% endif %}
+
+  <h3 style="margin-top: 30px; margin-bottom: 10px;">Items</h3>
+  <table style="
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+  ">
+    <thead style="background: #e8e8e8; text-align: left;">
+      <tr>
+        <th style="padding: 10px; border-bottom: 1px solid #ccc;">Product</th>
+        <th style="padding: 10px; border-bottom: 1px solid #ccc;">Qty</th>
+        <th style="padding: 10px; border-bottom: 1px solid #ccc;">Price</th>
+        <th style="padding: 10px; border-bottom: 1px solid #ccc;">Subtotal</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in order.items.all %}
+      <tr>
+        <td style="padding: 10px; border-bottom: 1px solid #ccc;">{{ item.product.name }}</td>
+        <td style="padding: 10px; border-bottom: 1px solid #ccc;">{{ item.quantity }}</td>
+        <td style="padding: 10px; border-bottom: 1px solid #ccc;">{{ item.price }}</td>
+        <td style="padding: 10px; border-bottom: 1px solid #ccc;">{{ item.subtotal }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% if order.status == "completed" %}
+    <form method="GET" action="{% url 'frontend:generate_invoice_frontend' order.id %}" style="margin-top: 20px;">
+      <button
+        type="submit"
+        style="
+          background: #358240;
+          color: #fff;
+          padding: 8px 14px;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+        "
+      >
+        Generate PDF Invoice
+      </button>
+    </form>
+  {% endif %}
+</div>
+{% endblock %}

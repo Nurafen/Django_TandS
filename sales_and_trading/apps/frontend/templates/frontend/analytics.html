@@ -1,0 +1,31 @@
+{% extends "frontend/base.html" %}
+{% block content %}
+<div style="
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 6px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+">
+  <h2 style="margin-top: 0; margin-bottom: 20px;">Analytics</h2>
+  <p style="font-size: 16px; line-height: 1.4; margin-bottom: 20px;">
+    Click the button to generate and download a CSV report of orders and sales orders.
+  </p>
+  <form method="POST" style="margin-top: 10px;">
+    {% csrf_token %}
+    <button
+      type="submit"
+      style="
+        background: #417690;
+        color: #fff;
+        padding: 10px 18px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+      "
+    >
+      Generate Report
+    </button>
+  </form>
+</div>
+{% endblock %}

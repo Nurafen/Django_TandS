@@ -1,0 +1,109 @@
+{% extends "frontend/base.html" %}
+{% block content %}
+<div class="register-container">
+  <h2 class="register-title">Create an Account</h2>
+
+  <form method="POST" class="register-form">
+    {% csrf_token %}
+
+    <div class="form-group">
+      {% for field in form %}
+        <div class="input-container">
+          {{ field.label_tag }}
+          {{ field }}
+        </div>
+      {% endfor %}
+    </div>
+
+    <button type="submit" class="register-button">Register</button>
+  </form>
+</div>
+
+<style>
+  /* Container */
+  .register-container {
+    max-width: 400px;
+    margin: 50px auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    text-align: center;
+  }
+
+  /* Title */
+  .register-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  /* Form Fields */
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .input-container {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 15px;
+  }
+
+  .input-container label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 5px;
+  }
+
+  .input-container input {
+    display: block;
+    width: calc(100% - 24px); /* Убираем padding из общей ширины */
+    padding: 12px;
+    margin: 0 auto;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+
+  .input-container input:focus {
+    border-color: #417690;
+    box-shadow: 0 0 8px rgba(65, 118, 144, 0.3);
+    outline: none;
+  }
+
+  /* Register Button */
+  .register-button {
+    width: 100%;
+    background: linear-gradient(135deg, #417690, #2b547e);
+    color: #fff;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+
+  .register-button:hover {
+    background: linear-gradient(135deg, #2b547e, #1f3f5b);
+    transform: scale(1.02);
+  }
+
+  /* Responsive */
+  @media (max-width: 480px) {
+    .register-container {
+      width: 90%;
+      padding: 20px;
+    }
+  }
+</style>
+{% endblock %}

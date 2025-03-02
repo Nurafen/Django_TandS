@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Trading & Sales Dashboard</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f7f9; /* Soft Gray-Blue */
+      height: 100%;
+      color: #333;
+    }
+
+    /* Layout */
+    .layout-wrapper {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 230px;
+      background: linear-gradient(135deg, #1e3c72, #2a5298); /* Deep Blue Gradient */
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      padding-top: 20px;
+      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .sidebar .brand {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .sidebar .brand a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 22px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .sidebar .profile-section {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .sidebar .profile-section img {
+      border-radius: 50%;
+      margin-top: 10px;
+      border: 3px solid #fff;
+    }
+
+    .sidebar a {
+      display: block;
+      text-decoration: none;
+      color: #e3f2fd;
+      padding: 12px 20px;
+      margin: 4px 10px;
+      border-radius: 6px;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .sidebar a:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.05);
+    }
+
+    /* Admin Button */
+    .admin-button {
+      display: block;
+      text-align: center;
+      background: linear-gradient(135deg, #ff9800, #ff5722); /* Orange Gradient */
+      color: #fff;
+      padding: 12px;
+      margin: 15px 10px;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 6px;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .admin-button:hover {
+      background: linear-gradient(135deg, #ff5722, #d84315);
+      transform: scale(1.05);
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      padding: 20px;
+    }
+
+    .main-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      min-height: calc(100vh - 40px);
+    }
+
+    /* Alerts */
+    .alert-info {
+      background: #ffecb3; /* Light Yellow */
+      padding: 12px 18px;
+      margin-bottom: 15px;
+      border-left: 5px solid #ff9800; /* Orange */
+      color: #6d4c41; /* Dark Brown */
+      border-radius: 6px;
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="layout-wrapper">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="brand">
+      <a href="{% url 'frontend:index' %}">Trading & Sales Hub</a>
+    </div>
+
+    {% if user.is_authenticated %}
+    <div class="profile-section">
+      <span>Welcome, {{ user.username }}</span>
+      {% if user.profile_image %}
+        <div>
+          <img src="{{ user.profile_image.url }}" alt="Profile Picture" height="50" />
+        </div>
+      {% endif %}
+    </div>
+
+    <a href="{% url 'frontend:product_list' %}">📦 Available Products</a>
+    <a href="{% url 'frontend:create_order' %}">🛒 New Sales Order</a>
+    <a href="{% url 'frontend:my_orders' %}">📜 Order History</a>
+
+    {% if user.role in "admin trader" %}
+      <a href="{% url 'frontend:create_trading_order' %}">💰 New Trade Order</a>
+      <a href="{% url 'frontend:list_trading_orders' %}">📊 All Trade Orders</a>
+      <a href="{% url 'frontend:list_transactions' %}">🔄 Transaction Records</a>
+    {% endif %}
+
+    {% if user.role == "admin" or user.is_staff or user.is_admin %}
+      <a href="{% url 'frontend:analytics' %}">📈 Performance Analytics</a>
+      <a href="{% url 'adminpanel:index' %}" class="admin-button">⚙️ Go to Admin Panel</a>
+    {% endif %}
+
+    <a href="{% url 'frontend:logout' %}">🚪 Sign Out</a>
+
+    {% else %}
+    <a href="{% url 'frontend:login' %}">🔑 Sign In</a>
+    <a href="{% url 'frontend:register' %}">📝 Create Account</a>
+    {% endif %}
+  </div>
+
+  <div class="main-content">
+    <div class="main-container">
+      {% if messages %}
+        {% for msg in messages %}
+          <div class="alert-info">{{ msg }}</div>
+        {% endfor %}
+      {% endif %}
+
+      {% block content %}{% endblock %}
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

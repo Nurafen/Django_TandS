@@ -1,0 +1,56 @@
+{% extends "frontend/base.html" %}
+{% block content %}
+<div style="
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 6px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+">
+  <h2 style="
+    margin-top: 0;
+    margin-bottom: 15px;
+  ">
+    {% if user.role in "trader admin" %}All{% else %}My{% endif %} Transactions
+  </h2>
+  <div style="margin-bottom: 15px;">
+    <a
+      href="{% url 'frontend:create_transaction' %}"
+      style="
+        background: #358240;
+        color: #fff;
+        padding: 8px 14px;
+        text-decoration: none;
+        border-radius: 4px;
+      "
+    >
+      Create Transaction
+    </a>
+  </div>
+  <table style="
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+  ">
+    <thead style="background: #e8e8e8; text-align: left;">
+      <tr>
+        <th style="padding: 10px; border-bottom: 1px solid #ccc;">Transaction ID</th>
+        <th style="padding: 10px; border-bottom: 1px solid #ccc;">Order ID</th>
+        <th style="padding: 10px; border-bottom: 1px solid #ccc;">Executed At</th>
+        <th style="padding: 10px; border-bottom: 1px solid #ccc;">Executed Price</th>
+        <th style="padding: 10px; border-bottom: 1px solid #ccc;">Quantity</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for tx in transactions %}
+      <tr>
+        <td style="padding: 10px; border-bottom: 1px solid #ccc;">{{ tx.id }}</td>
+        <td style="padding: 10px; border-bottom: 1px solid #ccc;">{{ tx.order.id }}</td>
+        <td style="padding: 10px; border-bottom: 1px solid #ccc;">{{ tx.executed_at|date:"Y-m-d H:i" }}</td>
+        <td style="padding: 10px; border-bottom: 1px solid #ccc;">{{ tx.executed_price }}</td>
+        <td style="padding: 10px; border-bottom: 1px solid #ccc;">{{ tx.quantity }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

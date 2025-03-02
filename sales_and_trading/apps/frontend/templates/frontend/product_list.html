@@ -1,0 +1,84 @@
+{% extends "frontend/base.html" %}
+{% block content %}
+<div style="
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 6px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+">
+  <h2 style="
+    margin-top: 0;
+    margin-bottom: 20px;
+  ">
+    Product Catalog
+  </h2>
+  {% if user.role == 'admin' or user.role == 'trader' or user.is_staff %}
+  <div style="margin-bottom: 15px;">
+    <a
+      href="{% url 'frontend:create_product' %}"
+      style="
+        background: #358240;
+        color: #fff;
+        padding: 8px 14px;
+        text-decoration: none;
+        border-radius: 4px;
+      "
+    >
+      Add New Product
+    </a>
+  </div>
+  {% endif %}
+  <table style="
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+  ">
+    <thead style="background: #e8e8e8; text-align: left;">
+      <tr>
+        <th style="padding: 10px; border-bottom: 1px solid #ccc;">Image</th>
+        <th style="padding: 10px; border-bottom: 1px solid #ccc;">Name</th>
+        <th style="padding: 10px; border-bottom: 1px solid #ccc;">Category</th>
+        <th style="padding: 10px; border-bottom: 1px solid #ccc;">Price</th>
+        <th style="padding: 10px; border-bottom: 1px solid #ccc;">Description</th>
+        {% if user.role == 'admin' or user.role == 'trader' or user.is_staff %}
+        <th style="padding: 10px; border-bottom: 1px solid #ccc;">Actions</th>
+        {% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for product in products %}
+      <tr>
+        <td style="padding: 10px; border-bottom: 1px solid #ccc;">
+          {% if product.image %}
+            <img src="{{ product.image.url }}" alt="Product Image" height="50"/>
+          {% else %}
+            No Image Available
+          {% endif %}
+        </td>
+        <td style="padding: 10px; border-bottom: 1px solid #ccc;">{{ product.name }}</td>
+        <td style="padding: 10px; border-bottom: 1px solid #ccc;">
+          {% if product.category %}
+            {{ product.category.name }}
+          {% endif %}
+        </td>
+        <td style="padding: 10px; border-bottom: 1px solid #ccc;">{{ product.price }}</td>
+        <td style="padding: 10px; border-bottom: 1px solid #ccc;">
+          {{ product.description|truncatewords:15 }}
+        </td>
+        {% if user.role == 'admin' or user.role == 'trader' or user.is_staff %}
+        <td style="padding: 10px; border-bottom: 1px solid #ccc;">
+          <a href="{% url 'frontend:update_product' product.id %}" style="
+            background: #007bff;
+            color: #fff;
+            padding: 6px 10px;
+            text-decoration: none;
+            border-radius: 4px;
+          ">Edit</a>
+        </td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

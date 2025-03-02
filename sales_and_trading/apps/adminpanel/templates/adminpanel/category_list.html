@@ -1,0 +1,65 @@
+{% extends "adminpanel/base.html" %}
+{% block content %}
+<div style="
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+">
+  <h2>Categories</h2>
+  <a
+    href="{% url 'adminpanel:category_create' %}"
+    style="
+      background: #417690;
+      color: #fff;
+      padding: 10px 15px;
+      text-decoration: none;
+      border-radius: 4px;
+    "
+  >
+    Create Category
+  </a>
+</div>
+
+<table style="
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+">
+  <thead style="
+    background: #e8e8e8;
+    text-align: left;
+  ">
+    <tr>
+      <th style="padding: 12px; border-bottom: 1px solid #ccc;">ID</th>
+      <th style="padding: 12px; border-bottom: 1px solid #ccc;">Name</th>
+      <th style="padding: 12px; border-bottom: 1px solid #ccc;">Description</th>
+      <th style="padding: 12px; border-bottom: 1px solid #ccc;">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for cat in categories %}
+    <tr>
+      <td style="padding: 12px; border-bottom: 1px solid #ccc;">{{ cat.id }}</td>
+      <td style="padding: 12px; border-bottom: 1px solid #ccc;">{{ cat.name }}</td>
+      <td style="padding: 12px; border-bottom: 1px solid #ccc;">{{ cat.description }}</td>
+      <td style="padding: 12px; border-bottom: 1px solid #ccc;">
+        <a
+          href="{% url 'adminpanel:category_update' cat.id %}"
+          style="
+            background: #358240;
+            color: #fff;
+            padding: 6px 12px;
+            text-decoration: none;
+            border-radius: 4px;
+          "
+        >
+          Edit
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

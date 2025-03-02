@@ -1,0 +1,17 @@
+Django
+djangorestframework
+djangorestframework-simplejwt
+celery
+redis
+drf-yasg
+psycopg2-binary
+whitenoise
+weasyprint
+PyPDF2
+django-crispy-forms
+crispy-bootstrap4
+django-redis
+stripe
+Pillow
+gunicorn
+python-dotenv

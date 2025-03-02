@@ -1,0 +1,108 @@
+{% extends "frontend/base.html" %}
+{% block content %}
+<div class="welcome-container">
+  <h1 class="welcome-title">Welcome to the Trading & Sales Platform!</h1>
+  <p class="welcome-text">
+    Manage your trades and sales seamlessly with our intuitive platform.
+    Discover new products, place orders, and track your transactions in real time.
+  </p>
+
+  <hr class="divider">
+
+  <!-- Feature Sections -->
+  <div class="features">
+    <div class="feature-card">
+      <h3>📦 Manage Orders</h3>
+      <p>View your order history and track active orders.</p>
+    </div>
+
+    <div class="feature-card">
+      <h3>📊 Track Sales</h3>
+      <p>Analyze your sales performance and monitor revenue trends.</p>
+    </div>
+
+    <div class="feature-card">
+      <h3>💰 Trading Dashboard</h3>
+      <p>Manage trades, view market insights, and track transactions.</p>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Container */
+  .welcome-container {
+    max-width: 800px;
+    margin: 50px auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    text-align: center;
+  }
+
+  /* Title */
+  .welcome-title {
+    font-size: 26px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+  }
+
+  /* Description */
+  .welcome-text {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #555;
+    margin-bottom: 20px;
+  }
+
+  /* Divider */
+  .divider {
+    border: none;
+    height: 1px;
+    background: #ccc;
+    margin: 20px 0;
+  }
+
+  /* Features Section */
+  .features {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+
+  .feature-card {
+    width: 30%;
+    background: #f5f5f5;
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    text-align: center;
+  }
+
+  .feature-card h3 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 8px;
+  }
+
+  .feature-card p {
+    font-size: 14px;
+    color: #666;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .features {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .feature-card {
+      width: 100%;
+      margin-bottom: 15px;
+    }
+  }
+</style>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends "adminpanel/base.html" %}
+{% block content %}
+<div style="
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+">
+  <h2>Users</h2>
+  <a
+    href="{% url 'adminpanel:user_create' %}"
+    style="
+      background: #417690;
+      color: #fff;
+      padding: 10px 15px;
+      text-decoration: none;
+      border-radius: 4px;
+    "
+  >
+    Create User
+  </a>
+</div>
+
+<table style="
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+">
+  <thead style="
+    background: #e8e8e8;
+    text-align: left;
+  ">
+    <tr>
+      <th style="padding: 12px; border-bottom: 1px solid #ccc;">Profile Image</th>
+      <th style="padding: 12px; border-bottom: 1px solid #ccc;">ID</th>
+      <th style="padding: 12px; border-bottom: 1px solid #ccc;">Username</th>
+      <th style="padding: 12px; border-bottom: 1px solid #ccc;">Email</th>
+      <th style="padding: 12px; border-bottom: 1px solid #ccc;">Role</th>
+      <th style="padding: 12px; border-bottom: 1px solid #ccc;">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for user in users %}
+    <tr>
+      <td style="padding: 12px; border-bottom: 1px solid #ccc;">
+        {% if user.profile_image %}
+          <img src="{{ user.profile_image.url }}" alt="Profile" height="50"/>
+        {% else %}
+          No Image
+        {% endif %}
+      </td>
+      <td style="padding: 12px; border-bottom: 1px solid #ccc;">{{ user.id }}</td>
+      <td style="padding: 12px; border-bottom: 1px solid #ccc;">{{ user.username }}</td>
+      <td style="padding: 12px; border-bottom: 1px solid #ccc;">{{ user.email }}</td>
+      <td style="padding: 12px; border-bottom: 1px solid #ccc;">{{ user.role }}</td>
+      <td style="padding: 12px; border-bottom: 1px solid #ccc;">
+        <a
+          href="{% url 'adminpanel:user_update' user.id %}"
+          style="
+            background: #358240;
+            color: #fff;
+            padding: 6px 12px;
+            text-decoration: none;
+            border-radius: 4px;
+          "
+        >
+          Edit
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

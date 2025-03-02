@@ -1,0 +1,51 @@
+{% extends "frontend/base.html" %}
+{% block content %}
+<div style="
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 6px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+">
+  <h2 style="
+    margin-top: 0;
+    margin-bottom: 15px;
+  ">
+    Trading Order #{{ order.id }}
+  </h2>
+  <p style="margin-bottom: 5px;">Type: {{ order.order_type }}</p>
+  <p style="margin-bottom: 5px;">Product: {{ order.product.name }}</p>
+  <p style="margin-bottom: 5px;">Quantity: {{ order.quantity }}</p>
+  <p style="margin-bottom: 5px;">Price: {{ order.price }}</p>
+  <p style="margin-bottom: 15px;">Status: {{ order.status }}</p>
+  <p style="margin-bottom: 15px;">Created At: {{ order.created_at|date:"Y-m-d H:i" }}</p>
+
+  <hr style="border: none; height: 1px; background: #ccc; margin-bottom: 15px;">
+  <h3 style="margin-bottom: 10px;">Transactions</h3>
+  {% if order.transactions.all %}
+  <table style="
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+  ">
+    <thead style="background: #e8e8e8; text-align: left;">
+      <tr>
+        <th style="padding: 10px; border-bottom: 1px solid #ccc;">Transaction ID</th>
+        <th style="padding: 10px; border-bottom: 1px solid #ccc;">Executed At</th>
+        <th style="padding: 10px; border-bottom: 1px solid #ccc;">Executed Price</th>
+        <th style="padding: 10px; border-bottom: 1px solid #ccc;">Quantity</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for tx in order.transactions.all %}
+      <tr>
+        <td style="padding: 10px; border-bottom: 1px solid #ccc;">{{ tx.id }}</td>
+        <td style="padding: 10px; border-bottom: 1px solid #ccc;">{{ tx.executed_at|date:"Y-m-d H:i" }}</td>
+        <td style="padding: 10px; border-bottom: 1px solid #ccc;">{{ tx.executed_price }}</td>
+        <td style="padding: 10px; border-bottom: 1px solid #ccc;">{{ tx.quantity }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p>No transactions yet.</p>
+  {% en
